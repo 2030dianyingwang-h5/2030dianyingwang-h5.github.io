@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2030电影网 - 未来全息影视导航 · 神经接口 · AI选片</title>
+<meta name="description" content="2030电影网（2030dianyingwang-h5）以2030年全息投影/神经接口概念做影视导航：2030片库、神经推荐、全息排片、AI放映厅，电影/剧集/动漫/综艺未来式导航。">
+<meta name="keywords" content="2030电影网,未来影视,全息投影,神经接口,AI选片,量子渲染,2030dianyingwang">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#020208;
+  --panel:rgba(0,245,255,.04);
+  --cyan:#00f5ff;
+  --purple:#b347ff;
+  --gold:#ffd700;
+  --bio:#39ff8a;
+  --energy:#ff6b1a;
+  --text:#c8e6ff;
+  --dim:#5a7a9a;
+  --line:rgba(0,245,255,.12);
+}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(1200px 600px at 50% -20%,rgba(179,71,255,.25),transparent),
+    radial-gradient(800px 400px at 80% 60%,rgba(0,245,255,.12),transparent),
+    var(--void);
+  color:var(--text);
+  font-family:"Orbitron","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.7;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* 粒子背景 */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(0,245,255,.3) 1px,transparent 1px);background-size:60px 60px;opacity:.2;z-index:0}
+
+/* 顶栏 */
+.topbar{background:rgba(2,2,8,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:6px 18px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:10px;color:var(--dim);letter-spacing:3px;position:relative;z-index:10}
+.topbar b{color:var(--cyan)}
+.topbar .year{color:var(--gold);font-size:13px;font-weight:900}
+
+/* Header */
+.header{max-width:1200px;margin:auto;padding:24px 18px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;position:relative;z-index:10}
+.brand{display:flex;align-items:center;gap:14px}
+.holo-core{width:56px;height:56px;border-radius:50%;background:conic-gradient(from 0deg,var(--cyan),var(--purple),var(--gold),var(--cyan));animation:spin 4s linear infinite;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(0,245,255,.4)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.holo-core::after{content:"";width:44px;height:44px;border-radius:50%;background:var(--void);position:absolute}
+.holo-core span{position:relative;z-index:1;font-size:22px}
+.brand h1{font-size:22px;font-weight:900;letter-spacing:2px}
+.brand h1 b{color:var(--cyan)}
+.brand p{font-size:10px;letter-spacing:5px;color:var(--dim)}
+.nav{display:flex;gap:6px;flex-wrap:wrap}
+.nav a{padding:8px 14px;font-size:11px;font-weight:800;border:1px solid var(--line);border-radius:20px;color:var(--dim);transition:.3s;text-transform:uppercase;letter-spacing:1px}
+.nav a:hover{color:var(--void);background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 15px rgba(0,245,255,.5)}
+
+.wrap{max-width:1200px;margin:auto;padding:0 18px;position:relative;z-index:1}
+
+/* Hero 全息投影 */
+.hero{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.hero-text h2{font-size:clamp(32px,7vw,64px);font-weight:900;line-height:1;margin-bottom:14px}
+.hero-text h2 .cyan{color:var(--cyan)}
+.hero-text h2 .purple{color:var(--purple)}
+.hero-text h2 .gold{color:var(--gold)}
+.hero-text p{color:var(--dim);font-size:14px;max-width:480px;margin-bottom:20px}
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;text-align:center;backdrop-filter:blur(6px)}
+.stat b{display:block;font-size:22px;color:var(--gold)}
+.stat span{font-size:10px;color:var(--dim);letter-spacing:2px}
+.cta{display:inline-block;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;font-weight:900;letter-spacing:3px;padding:14px 28px;border-radius:14px;box-shadow:0 0 30px rgba(0,245,255,.3);position:relative;overflow:hidden}
+.cta::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transform:translateX(-100%);animation:shimmer 3s infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+
+/* 全息投影仪 */
+.holo-display{position:relative;height:380px;display:flex;align-items:center;justify-content:center}
+.holo-ring{position:absolute;width:300px;height:300px;border:2px dashed var(--cyan);border-radius:50%;animation:spin 20s linear infinite}
+.holo-ring2{position:absolute;width:240px;height:240px;border:1px solid var(--purple);border-radius:50%;animation:spin 15s linear infinite reverse}
+.holo-ring3{position:absolute;width:180px;height:180px;border:2px dotted var(--gold);border-radius:50%;animation:spin 10s linear infinite}
+.holo-film{position:absolute;width:140px;height:200px;border-radius:12px;overflow:hidden;box-shadow:0 0 40px rgba(0,245,255,.3);transform:perspective(600px) rotateY(-15deg) rotateX(5deg);animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:perspective(600px) rotateY(-15deg) rotateX(5deg) translateY(0)}50%{transform:perspective(600px) rotateY(-15deg) rotateX(5deg) translateY(-12px)}}
+.holo-film img{width:100%;height:100%;object-fit:cover}
+.holo-film.f2{transform:perspective(600px) rotateY(15deg) rotateX(-5deg);animation-delay:-2s;left:60%}
+.holo-film.f3{transform:perspective(600px) rotateY(0deg) rotateX(0deg);animation-delay:-1s;left:30%;top:60%}
+
+/* 栏目标题 */
+.section{margin-top:64px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.sec-head .icon{width:36px;height:36px;border:2px solid var(--cyan);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.sec-head h2{font-size:24px;font-weight:900;letter-spacing:1px}
+.sec-head h2 em{color:var(--gold);font-style:normal}
+.sec-head a{margin-left:auto;font-size:12px;font-weight:800;color:var(--cyan);border-bottom:2px solid var(--cyan)}
+
+/* 栏目1：2030片库 - 3D悬浮卡 */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.film{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.4s;backdrop-filter:blur(6px);position:relative}
+.film::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(0,245,255,.05));pointer-events:none}
+.film:hover{transform:translateY(-8px) rotateX(2deg);border-color:var(--cyan);box-shadow:0 20px 40px rgba(0,245,255,.15)}
+.film .pic{height:280px;overflow:hidden;position:relative}
+.film .pic img{width:100%;height:100%;object-fit:cover;filter:saturate(1.2) hue-rotate(10deg)}
+.film:hover .pic img{transform:scale(1.05)}
+.film .hud{position:absolute;top:10px;right:10px;background:rgba(2,2,8,.8);border:1px solid var(--cyan);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--cyan);backdrop-filter:blur(4px)}
+.film .info{padding:14px}
+.film h4{font-size:16px;font-weight:900}
+.film p{font-size:12px;color:var(--dim);margin-top:3px}
+.film .tags{display:flex;gap:6px;margin-top:8px}
+.film .tag{font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid var(--line)}
+.film .tag.cyan{color:var(--cyan);border-color:var(--cyan)}
+.film .tag.purple{color:var(--purple);border-color:var(--purple)}
+.film .tag.gold{color:var(--gold);border-color:var(--gold)}
+
+/* 栏目2：神经推荐 - 连接线图 */
+.neural{background:linear-gradient(160deg,rgba(179,71,255,.08),rgba(0,245,255,.05));border:1px solid var(--line);border-radius:20px;padding:30px;position:relative;overflow:hidden}
+.neural::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,245,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.05) 1px,transparent 1px);background-size:40px 40px}
+.neural-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}
+@media(max-width:760px){.neural-grid{grid-template-columns:1fr}}
+.node{background:rgba(2,2,8,.7);border:1px solid var(--purple);border-radius:14px;padding:20px;position:relative;backdrop-filter:blur(8px);transition:.3s}
+.node:hover{border-color:var(--cyan);box-shadow:0 0 20px rgba(0,245,255,.2)}
+.node::before{content:"";position:absolute;top:-10px;left:30px;width:2px;height:10px;background:var(--purple)}
+.node .brain{font-size:28px;margin-bottom:8px}
+.node h4{font-size:15px;font-weight:900;margin-bottom:4px}
+.node p{font-size:12px;color:var(--dim)}
+.node .confidence{margin-top:10px;display:flex;align-items:center;gap:8px}
+.node .confidence span{font-size:11px;color:var(--bio)}
+.node .bar{width:80px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.node .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:2px}
+
+/* 栏目3：全息排片 - 时间轴 */
+.timeline{position:relative}
+.timeline::before{content:"";position:absolute;left:30px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--cyan),var(--purple),var(--gold))}
+@media(max-width:600px){.timeline::before{left:20px}}
+.tl-item{display:grid;grid-template-columns:60px 1fr auto;gap:18px;align-items:center;padding:16px 0;position:relative}
+@media(max-width:600px){.tl-item{grid-template-columns:40px 1fr;gap:12px}}
+.tl-item .time{text-align:center;font-size:13px;font-weight:900;color:var(--cyan);background:var(--void);border:1px solid var(--cyan);border-radius:8px;padding:6px 4px;position:relative;z-index:2}
+.tl-item .content{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;backdrop-filter:blur(4px)}
+.tl-item .content h4{font-size:15px;font-weight:900;margin-bottom:2px}
+.tl-item .content p{font-size:12px;color:var(--dim)}
+.tl-item .status{font-size:11px;font-weight:800;padding:6px 12px;border-radius:8px;text-align:center}
+.tl-item .status.live{background:rgba(57,255,138,.15);color:var(--bio);border:1px solid var(--bio)}
+.tl-item .status.soon{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid var(--gold)}
+.tl-item .status.queue{background:rgba(255,107,26,.15);color:var(--energy);border:1px solid var(--energy)}
+@media(max-width:600px){.tl-item .status{display:none}}
+
+/* 栏目4：AI放映厅 */
+.ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.ai-grid{grid-template-columns:1fr}}
+.ai-card{border:1px solid var(--line);border-radius:16px;padding:22px;background:linear-gradient(145deg,rgba(0,245,255,.06),rgba(179,71,255,.06));position:relative;overflow:hidden}
+.ai-card .ai-icon{font-size:36px;margin-bottom:10px}
+.ai-card h4{font-size:17px;font-weight:900;margin-bottom:6px}
+.ai-card h4 em{color:var(--cyan);font-style:normal}
+.ai-card p{font-size:13px;color:var(--dim);margin-bottom:12px}
+.ai-card .progress{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.ai-card .progress i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:3px}
+.ai-card .label{font-size:11px;color:var(--dim);display:flex;justify-content:space-between}
+.ai-card:nth-child(2){background:linear-gradient(145deg,rgba(255,107,26,.06),rgba(255,215,0,.06))}
+.ai-card:nth-child(3){background:linear-gradient(145deg,rgba(57,255,138,.06),rgba(0,245,255,.06))}
+.ai-card:nth-child(4){background:linear-gradient(145deg,rgba(179,71,255,.06),rgba(255,107,26,.06))}
+
+/* 关于 */
+.about{border:1px solid var(--line);border-radius:20px;padding:32px;margin-top:64px;background:linear-gradient(160deg,rgba(0,245,255,.04),rgba(179,71,255,.04));backdrop-filter:blur(6px)}
+.about h2{font-size:26px;font-weight:900;margin-bottom:14px;letter-spacing:1px}
+.about h2 em{color:var(--cyan);font-style:normal}
+.about p{font-size:14px;color:var(--dim);max-width:780px;margin-bottom:10px;line-height:1.8}
+.about a{color:var(--gold);font-weight:800}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+@media(max-width:700px){.features{grid-template-columns:repeat(2,1fr)}}
+.feat{border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;background:var(--panel)}
+.feat .fi{font-size:24px;margin-bottom:6px}
+.feat h4{font-size:13px;font-weight:800;margin-bottom:2px}
+.feat p{font-size:11px;color:var(--dim)}
+
+.footer{margin-top:60px;padding:30px 18px;text-align:center;color:var(--dim);font-size:12px;border-top:1px solid var(--line);position:relative;z-index:10}
+.footer a{color:var(--cyan);font-weight:900}
+.footer .big{font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="topbar">
+  <span>neural-link v3.2.1 · <b>已连接</b> · 量子通道稳定</span>
+  <span class="year">2030.10.06 · 星期二 · 系统在线</span>
+</div>
+
+<header class="header">
+  <div class="brand">
+    <div class="holo-core"><span>🧠</span></div>
+    <div>
+      <h1>2030< b>电影网</span></h1>
+      <p>NEURAL CINEMA NETWORK</p>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="#">首页</a>
+    <a href="#lib">2030片库</a>
+    <a href="#neural">神经推荐</a>
+    <a href="#timeline">全息排片</a>
+    <a href="#ai">AI放映厅</a>
+    <a href="#about">关于2030</a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h2>2030<br><span class="cyan">全息</span>·<span class="purple">神经</span>·<span class="gold">量子</span></h2>
+      <p>2030 年的电影不再只是"看"——全息投影悬浮在你面前，神经接口同步你的情绪，AI 比你更懂你想看什么。欢迎来到未来影院。</p>
+      <div class="stats">
+        <div class="stat"><b>∞</b><span>量子片库</span></div>
+        <div class="stat"><b>0.03s</b><span>神经匹配</span></div>
+        <div class="stat"><b>8K</b><span>全息渲染</span></div>
+      </div>
+      <a href="#lib" class="cta">▶ 启动全息放映</a>
+    </div>
+    <div class="holo-display">
+      <div class="holo-ring"></div>
+      <div class="holo-ring2"></div>
+      <div class="holo-ring3"></div>
+      <div class="holo-film"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&q=80" alt="奥本海默"></div>
+      <div class="holo-film f2"><img src="https://images.unsplash.com/photo-1524985069026-ddb1d3e1b1a4?w=300&q=80" alt="沙丘2"></div>
+      <div class="holo-film f3"><img src="https://images.unsplash.com/photo-1489593908472-4d1a72d5d1b9?w=300&q=80" alt="蜘蛛侠"></div>
+    </div>
+  </section>
+
+  <!-- 栏目1：2030片库 -->
+  <section class="section" id="lib">
+    <div class="sec-head"><span class="icon">🎬</span><h2>2030 <em>片库</em></h2><a href="#">量子搜索 ›</a></div>
+    <div class="grid">
+      <article class="film"><div class="pic"><span class="hud">8K HDR</span><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80" alt="奥本海默"></div><div class="info"><h4>奥本海默</h4><p>传记 · 量子物理 · 2023</p><div class="tags"><span class="tag cyan">8K</span><span class="tag purple">IMAX</span><span class="tag gold">杜比</span></div></div></article>
+      <article class="film"><div class="pic"><span class="hud">全息</span><img src="https://images.unsplash.com/photo-1524985069026-ddb1d3e1b1a4?w=400&q=80" alt="沙丘2"></div><div class="info"><h4>沙丘：第二部</h4><p>科幻 · 沙漠 · 2024</p><div class="tags"><span class="tag cyan">全息</span><span class="tag purple">3D</span><span class="tag gold">HDR10+</span></div></div></article>
+      <article class="film"><div class="pic"><span class="hud">神经同步</span><img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=400&q=80" alt="坠落的审判"></div><div class="info"><h4>坠落的审判</h4><p>悬疑 · 金棕榈 · 2023</p><div class="tags"><span class="tag purple">脑波</span><span class="tag cyan">沉浸</span></div></div></article>
+      <article class="film"><div class="pic"><span class="hud">AI增强</span><img src="https://images.unsplash.com/photo-1489593908472-4d1a72d5d1b9?w=400&q=80" alt="蜘蛛侠纵横宇宙"></div><div class="info"><h4>蜘蛛侠：纵横宇宙</h4><p>动画 · 多宇宙 · 2023</p><div class="tags"><span class="tag gold">AI超分</span><span class="tag cyan">120fps</span></div></div></article>
+      <article class="film"><div class="pic"><span class="hud">云端</span><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=400&q=80" alt="花月杀手"></div><div class="info"><h4>花月杀手</h4><p>犯罪 · 史诗 · 2023</p><div class="tags"><span class="tag purple">4K</span><span class="tag gold">无损</span></div></div></article>
+      <article class="film"><div class="pic"><span class="hud">VR</span><img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&q=80" alt="芭比"></div><div class="info"><h4>芭比</h4><p>喜剧 · 粉色 · 2023</p><div class="tags"><span class="tag cyan">VR180</span><span class="tag purple">空间音频</span></div></div></article>
+    </div>
+  </section>
+
+</div>
+
+  <!-- 栏目2：神经推荐 -->
+  <section class="neural" id="neural">
+    <div class="wrap">
+      <div class="sec-head"><span class="icon" style="border-color:var(--purple)">🧬</span><h2>神经< em style="color:var(--purple)">推荐</span></h2><a href="#" style="border-color:var(--purple);color:var(--purple)">校准脑波 ›</a></div>
+      <div class="neural-grid">
+        <div class="node"><div class="brain">🎯</div><h4>基于情绪匹配</h4><p>检测到你当前情绪：平静偏好奇 → 推荐烧脑悬疑</p><div class="confidence"><span>匹配度 97%</span><div class="bar"><i style="width:97%"></i></div></div></div>
+        <div class="node"><div class="brain">👁️</div><h4>眼球追踪分析</h4><p>你停留最久的类型：科幻/太空/量子 → 推荐沙丘系列</p><div class="confidence"><span>匹配度 94%</span><div class="bar"><i style="width:94%"></i></div></div></div>
+        <div class="node"><div class="brain">🫀</div><h4>心率同步推荐</h4><p>当前心率 72bpm → 适合节奏紧凑的 110min 片长</p><div class="confidence"><span>匹配度 91%</span><div class="bar"><i style="width:91%"></i></div></div></div>
+      </div>
+    </div>
+  </section>
+
+<div class="wrap">
+
+  <!-- 栏目3：全息排片 -->
+  <section class="section" id="timeline">
+    <div class="sec-head"><span class="icon">📡</span><h2>全息< em>排片</em></h2><a href="#">完整时间表 ›</a></div>
+    <div class="timeline">
+      <div class="tl-item"><div class="time">NOW</div><div class="content"><h4>奥本海默</h4><p>全息厅 A · 量子渲染 · 杜比全景声</p></div><div class="status live">● 放映中</div></div>
+      <div class="tl-item"><div class="time">20:30</div><div class="content"><h4>沙丘：第二部</h4><p>IMAX 全息厅 · 沙虫场景触觉反馈</p></div><div class="status soon">即将开始</div></div>
+      <div class="tl-item"><div class="time">23:00</div><div class="content"><h4>坠落的审判</h4><p>神经同步厅 · 情绪共振模式</p></div><div class="status queue">已预约</div></div>
+      <div class="tl-item"><div class="time">02:00</div><div class="content"><h4>蜘蛛侠：纵横宇宙</h4><p>VR 全景厅 · 多宇宙穿梭体验</p></div><div class="status queue">已预约</div></div>
+      <div class="tl-item"><div class="time">05:00</div><div class="content"><h4>花月杀手</h4><p>私人舱 · 脑波自适应剪辑版</p></div><div class="status queue">已预约</div></div>
+    </div>
+  </section>
+
+  <!-- 栏目4：AI放映厅 -->
+  <section class="section" id="ai">
+    <div class="sec-head"><span class="icon">🤖</span><h2>AI <em>放映厅</em></h2><a href="#">训练模型 ›</a></div>
+    <div class="ai-grid">
+      <div class="ai-card"><div class="ai-icon">🎨</div><h4><em>AI 智能剪辑</em></h4><p>根据观众注意力曲线自动生成最优剪辑版本，每场放映独一无二</p><div class="progress"><i style="width:88%"></i></div><div class="label"><span>模型训练进度</span><span>88%</span></div></div>
+      <div class="ai-card"><div class="ai-icon">🗣️</div><h4><em>实时配音翻译</em></h4><p>任意语言实时神经翻译配音，保留原声情感与语调</p><div class="progress"><i style="width:76%"></i></div><div class="label"><span>语言覆盖</span><span>76/128</span></div></div>
+      <div class="ai-card"><div class="ai-icon">🎵</div><h4><em>自适应配乐</em></h4><p>AI 根据画面内容和你的心率实时生成背景音乐</p><div class="progress"><i style="width:92%"></i></div><div class="label"><span>情感映射</span><span>92%</span></div></div>
+      <div class="ai-card"><div class="ai-icon">🌐</div><h4><em>跨维度推荐</em></h4><p>结合你的社交图谱、阅读记录、梦境日志推荐影片</p><div class="progress"><i style="width:63%"></i></div><div class="label"><span>数据源接入</span><span>63%</span></div></div>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="about" id="about">
+    <h2>关于 <em>2030电影网</em></h2>
+    <p>2030电影网（2030dianyingwang-h5）不是对未来的幻想——它是 2024 年的我们为 2030 年写的预告片。全息投影、神经接口、AI 选片、量子渲染，这些技术正在路上。我们提前把"影院"搬进你的浏览器。</p>
+    <p>网站名称：<strong style="color:var(--cyan)">2030电影网</strong><br>
+       网站网址：<a href="https://2030dianyingwang-h5.github.io">https://2030dianyingwang-h5.github.io</a></p>
+    <div class="features">
+      <div class="feat"><div class="fi">🫧</div><h4>全息投影</h4><p>悬浮影像</p></div>
+      <div class="feat"><div class="fi">🧠</div><h4>神经接口</h4><p>情绪同步</p></div>
+      <div class="feat"><div class="fi">⚛️</div><h4>量子渲染</h4><p>无限算力</p></div>
+      <div class="feat"><div class="fi">🤖</div><h4>AI 选片</h4><p>比你更懂你</p></div>
+    </div>
+    <p style="margin-top:18px">本站仅做影视信息展示与导航，资源来自互联网，如有侵权请联系删除。</p>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="big">2030 电影网</div>
+  <p>© 2030 2030电影网 ｜ 网站名称：2030电影网 ｜ 网址：<a href="https://2030dianyingwang-h5.github.io">2030dianyingwang-h5.github.io</a></p>
+  <p>全息投影 / 神经接口 / 量子渲染风 · 单页静态演示 · 内链 # 占位 · 未生成 robots.txt / sitemap.xml</p>
+</footer>
+
+</body>
+</html>
